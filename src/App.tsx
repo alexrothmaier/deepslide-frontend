@@ -10,6 +10,13 @@ import PricingPage from './components/pages/PricingPage.tsx';
 import EnterprisePage from './components/pages/EnterprisePage.tsx';
 import AccountPageGuard from './components/pages/AccountPageGuard.tsx';
 import AuthInitializer from './components/AuthInitializer.tsx';
+import Footer from './components/Footer.tsx';
+import CookieConsent from './components/CookieConsent.tsx';
+import Impressum from './components/legal/Impressum.tsx';
+import Datenschutzerklaerung from './components/legal/Datenschutzerklaerung.tsx';
+import AGB from './components/legal/AGB.tsx';
+import Widerruf from './components/legal/Widerruf.tsx';
+
 
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
@@ -242,14 +249,17 @@ const MainPage: React.FC = () => {
   }
   // Authenticated: show main app UI
   return (
-    <div className="App" style={{ background: '#18181b', minHeight: '100vh', color: 'white' }}>
-      <div style={{ padding: '20px 0', textAlign: 'center', fontWeight: 700, fontSize: 22 }}>
-        DeepSlide
-      </div>
-      <div style={{ textAlign: 'center', marginBottom: 16, color: '#00bfae', fontWeight: 600, fontSize: 18 }}>
-        {plan === 'Free Plan' ? 'free plan' : plan}
-      </div>
+    <div className="App" style={{ background: '#18181b', minHeight: '100vh', color: 'white', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <div style={{ flex: 1 }}>
+        <div style={{ padding: '20px 0', textAlign: 'center', fontWeight: 700, fontSize: 22 }}>
+          DeepSlide
+        </div>
+        <div style={{ textAlign: 'center', marginBottom: 16, color: '#00bfae', fontWeight: 600, fontSize: 18 }}>
+          {plan === 'Free Plan' ? 'free plan' : plan}
+        </div>
         <SearchInterface />
+      </div>
+      <Footer />
     </div>
   );
 };
@@ -262,17 +272,59 @@ const App: React.FC<AppProps> = ({ msalInstance }) => {
   return (
     <MsalProvider instance={msalInstance}>
       <AuthInitializer />
+      <CookieConsent />
       <Router>
         <Routes>
           <Route path="/app/*" element={<MainPage />} />
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPageWithFooter />} />
           <Route path="/files" element={<FilesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/enterprise" element={<EnterprisePage />} />
           <Route path="/account" element={<AccountPageGuard />} />
+          <Route path="/impressum" element={<LegalPageLayout><Impressum /></LegalPageLayout>} />
+          <Route path="/datenschutz" element={<LegalPageLayout><Datenschutzerklaerung /></LegalPageLayout>} />
+          <Route path="/agb" element={<LegalPageLayout><AGB /></LegalPageLayout>} />
+          <Route path="/widerruf" element={<LegalPageLayout><Widerruf /></LegalPageLayout>} />
+          <Route path="/cookie-einstellungen" element={<CookieSettingsPage />} />
         </Routes>
       </Router>
     </MsalProvider>
+  );
+};
+
+// Wrap LandingPage with Footer for legal links
+const LandingPageWithFooter: React.FC = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div style={{ flex: 1 }}>
+      <LandingPage />
+    </div>
+    <Footer />
+  </div>
+);
+
+// Simple LegalPageLayout to add footer to legal pages
+const LegalPageLayout: React.FC<{children: React.ReactNode}> = ({ children }) => (
+  <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: '#111', color: '#fff' }}>
+    <div style={{ flex: 1 }}>{children}</div>
+    <Footer />
+  </div>
+);
+
+// Simple Cookie Settings page to allow users to re-open consent dialog
+const CookieSettingsPage: React.FC = () => {
+  useEffect(() => {
+    // Remove consent to force re-show
+    localStorage.removeItem('cookie_consent');
+    window.dispatchEvent(new Event('cookie-consent-updated'));
+  }, []);
+  return (
+    <LegalPageLayout>
+      <div style={{ maxWidth: 800, margin: 'auto', padding: 32 }}>
+        <h1>Cookie-Einstellungen</h1>
+        <p>Sie können Ihre Cookie-Präferenzen unten ändern:</p>
+        <CookieConsent />
+      </div>
+    </LegalPageLayout>
   );
 };
 

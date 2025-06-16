@@ -1,16 +1,19 @@
 import React from 'react';
 import NavBar from './NavBar.tsx';
 import './LandingLayout.css';
-
+import Footer from '../Footer.tsx';
 interface Props {
   children: React.ReactNode;
 }
 
+
+
 const LandingLayout: React.FC<Props> = ({ children }) => {
   return (
-    <div className="landing-layout">
+    <div className="landing-layout" style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
       <NavBar />
-      <main className="landing-layout__content">{children}</main>
+      <main className="landing-layout__content" style={{flex: 1}}>{children}</main>
+      <Footer />
     </div>
   );
 };
