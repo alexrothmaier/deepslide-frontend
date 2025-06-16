@@ -1,15 +1,72 @@
 import React from 'react';
 import LandingLayout from '../landing/LandingLayout.tsx';
 
+// Add CSS for hover effects
+const pricingStyles = `
+.pricing-card {
+  background: rgba(17, 24, 39, 0.95);
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.15);
+  padding: 2rem;
+  margin: 1rem;
+  flex: 1;
+  min-width: 260px;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid transparent;
+  transition: border 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.pricing-card.pricing-card-highlight {
+  border: 2px solid #38bdf8;
+  background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+  color: #fff;
+}
+.pricing-card:hover {
+  box-shadow: 0 8px 32px 0 rgba(56,189,248,0.25);
+  border: 2px solid #38bdf8;
+  transform: scale(1.04);
+  z-index: 2;
+}
+.pricing-btn {
+  background: #38bdf8;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 3.2rem;
+  min-width: 200px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: auto;
+  box-shadow: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.pricing-card-highlight .pricing-btn {
+  background: #fff;
+  color: #0ea5e9;
+  box-shadow: 0 2px 16px 0 rgba(56,189,248,0.25);
+}
+.pricing-btn:hover {
+  background: #0ea5e9;
+  color: #fff;
+  transform: scale(1.06);
+}
+.pricing-card-highlight .pricing-btn:hover {
+  background: #e0f2fe;
+  color: #0ea5e9;
+}
+`;
+
 const plans = [
   {
     name: 'Free',
     price: '$0',
     period: '/month',
     features: [
-      'Basic slide analysis',
-      'Up to 3 projects',
-      'Community support',
+      '50 search queries',
+      'Upload up to 500MB of slides',
     ],
     button: { label: 'Get Started', onClick: () => window.location.href = '/signup' },
     highlight: false,
@@ -71,7 +128,7 @@ const PricingPage: React.FC = () => {
         style={{
           padding: '4rem 1rem',
           color: 'white',
-          background: '#000',
+          background: 'rgba(17, 17, 17, 0.98)',
           minHeight: '100vh',
         }}
       >
@@ -89,10 +146,12 @@ const PricingPage: React.FC = () => {
             maxWidth: 1100,
           }}
         >
+          {/* Add style block for hover effects */}
+          <style>{pricingStyles}</style>
           {plans.map((plan) => (
             <div
               key={plan.name}
-              style={plan.highlight ? { ...cardStyle, ...highlightStyle } : cardStyle}
+              className={`pricing-card${plan.highlight ? ' pricing-card-highlight' : ''}`}
               aria-label={plan.name + ' plan'}
             >
               <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>{plan.name}</h2>
@@ -127,19 +186,7 @@ const PricingPage: React.FC = () => {
               </ul>
               <button
                 onClick={plan.button.onClick}
-                style={{
-                  background: plan.highlight ? '#fff' : '#38bdf8',
-                  color: plan.highlight ? '#0ea5e9' : '#fff',
-                  border: 'none',
-                  borderRadius: 8,
-                  padding: '0.75rem 2rem',
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  marginTop: 'auto',
-                  boxShadow: plan.highlight ? '0 2px 16px 0 rgba(56,189,248,0.25)' : 'none',
-                  transition: 'background 0.2s, color 0.2s',
-                }}
+                className="pricing-btn"
                 aria-label={plan.button.label + ' for ' + plan.name}
               >
                 {plan.button.label}
