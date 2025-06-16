@@ -4,6 +4,11 @@ import { initializeIcons, Spinner, SpinnerSize, MessageBar, MessageBarType, Stac
 import SearchInterface from './components/SearchInterface.tsx';
 import LoginBox from './components/LoginBox.tsx';
 import SignUpBox from './components/SignUpBox.tsx';
+import LandingPage from './components/LandingPage.tsx';
+import FilesPage from './components/pages/FilesPage.tsx';
+import PricingPage from './components/pages/PricingPage.tsx';
+import EnterprisePage from './components/pages/EnterprisePage.tsx';
+import AccountPage from './components/pages/AccountPage.tsx';
 
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
@@ -257,7 +262,12 @@ const App: React.FC<AppProps> = ({ msalInstance }) => {
     <MsalProvider instance={msalInstance}>
       <Router>
         <Routes>
-          <Route path="/*" element={<MainPage />} />
+          <Route path="/app/*" element={<MainPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/files" element={<FilesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/enterprise" element={<EnterprisePage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </Router>
     </MsalProvider>

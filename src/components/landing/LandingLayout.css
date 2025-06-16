@@ -1,0 +1,22 @@
+/* Landing layout styles */
+
+.landing-layout {
+  background: #18181b; /* Dark base */
+  min-height: 100vh;
+  color: #fff;
+}
+
+.landing-layout__content {
+  padding: 0;
+}
+
+/* Optional subtle grid background */
+.landing-layout::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: -1;
+}
