@@ -1,0 +1,209 @@
+/* LoginBox.css */
+.login-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 0;
+}
+
+.login-container {
+  background: #18181b;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px #0006;
+  padding: 40px 32px 28px 32px;
+  min-width: 340px;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+:root {
+  --accent-color: #00bfae;
+  /* To use blue instead, uncomment the next line and comment out the above:
+     --accent-color: var(--LOGIN_ACCENT_COLOR, #2077ff);
+  */
+}
+
+.login-logo {
+  width: 150px;
+  margin-bottom: -30px;
+}
+
+.login-title {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 28px;
+  margin-top: 0;
+}
+
+.login-provider-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  background: #232326;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0 12px 12px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.16s;
+}
+.login-provider-btn:hover, .login-provider-btn:focus {
+  background: #232326ee;
+  box-shadow: 0 6px 24px var(--accent-color), 0 2px 12px var(--accent-color)55;
+  transform: translateY(-2px) scale(1.025);
+}
+.provider-logo {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.login-provider-btn.linkedin {
+  background: #232326;
+}
+
+.login-divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0 12px 0;
+}
+.login-divider-line {
+  flex: 1;
+  height: 1.5px;
+  background: #242428;
+  border-radius: 1px;
+  margin: 0 8px;
+}
+.login-divider-or {
+  color: #aaa;
+  font-size: 1rem;
+  background: #18181b;
+  padding: 0 16px;
+  z-index: 1;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-name-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  .login-container {
+    padding: 18px 6px 18px 6px;
+    min-width: unset;
+    max-width: 98vw;
+  }
+  .login-name-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+.login-label {
+  color: #aaa;
+  font-size: 0.98rem;
+  margin-bottom: 2px;
+}
+.login-input {
+  background: #222227;
+  color: #fff;
+  border: 1px solid #29292c;
+  border-radius: 7px;
+  padding: 10px 12px;
+  font-size: 1rem;
+  margin-bottom: 6px;
+  outline: none;
+  transition: border 0.18s;
+}
+.login-input:focus {
+  border: 1.5px solid var(--accent-color);
+}
+.login-links-row {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #aaa;
+}
+.login-link-action {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 4px;
+}
+.login-link-action:hover {
+  text-decoration: underline;
+}
+.login-submit-btn {
+  width: 100%;
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 0;
+  font-size: 1.07rem;
+  font-weight: 600;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.login-submit-btn:hover, .login-submit-btn:focus {
+  background: #00a89e;
+}
+.login-signup-row {
+  width: 100%;
+  text-align: center;
+  margin-top: 18px;
+  color: #aaa;
+  font-size: 0.97rem;
+}
+
+.login-loading-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6px;
+  background: var(--accent-color);
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  overflow: hidden;
+  z-index: 2;
+  box-shadow: 0 2px 8px 0 rgba(32,119,255,0.13);
+}
+.login-loading-inner {
+  display: block;
+  width: 30%;
+  height: 100%;
+  background: #fff5;
+  position: absolute;
+  left: -30%;
+  animation: loadingBarAnim 1.2s linear infinite;
+  border-radius: 4px;
+}

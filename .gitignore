@@ -31,8 +31,6 @@ Thumbs.db
 .env.local
 .env.*.local
 
-# MSAL config (if it contains secrets)
-msalConfig.js
 
 # Test coverage
 coverage/

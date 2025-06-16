@@ -1,0 +1,48 @@
+.search-interface {
+  padding: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.search-interface h1 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #0078d4;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.search-button {
+  align-self: flex-end;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.error-message,
+.info-message {
+  margin-bottom: 16px;
+}
+
+/* Responsive adjustments for Office Add-in taskpane */
+@media (max-width: 320px) {
+  .search-interface h1 {
+    font-size: 18px;
+  }
+  
+  .search-form {
+    margin-bottom: 12px;
+  }
+}
