@@ -1,10 +1,5 @@
-import { useCallback, useState, useEffect } from 'react';
-import { useMsal } from '@azure/msal-react';
-import { InteractionRequiredAuthError, AccountInfo, IPublicClientApplication } from '@azure/msal-browser';
-import { msalConfig } from '../msalConfig';
-
-const API_SCOPE = `api://${msalConfig.auth.clientId}/access_as_user`;
-const BASE_SCOPES = [API_SCOPE];
+// useMsalToken.ts removed. Migrating to Firebase Auth.
+// Placeholder: useFirebaseAuth.ts will be implemented for Firebase Auth.
 
 interface UseMsalTokenResult {
   token: string | null;
@@ -66,6 +61,7 @@ export function useMsalToken(autoFetch: boolean = true): UseMsalTokenResult {
       setLoading(false);
       return token;
     } catch (e: any) {
+      console.error("MSAL token error:", e); // Log full error for debugging
       setError(e.message || "Failed to acquire token");
       setToken(null);
       setLoading(false);

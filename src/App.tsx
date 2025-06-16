@@ -20,8 +20,11 @@ import Widerruf from './components/legal/Widerruf.tsx';
 
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
-import { PublicClientApplication, EventType, AccountInfo, InteractionStatus } from '@azure/msal-browser';
-import { MsalProvider, useMsal } from '@azure/msal-react';
+import LoginPage from './components/pages/login/LoginPage.tsx';
+import { FirebaseAuthProvider } from './auth/FirebaseAuthProvider.tsx';
+// import { PublicClientApplication, EventType, AccountInfo, InteractionStatus } from '@azure/msal-browser';
+// import { MsalProvider, useMsal } from '@azure/msal-react';
+// TODO: Integrate Firebase Auth context/provider
 
 // Helper to get user roles from ID token claims (if available)
 function getUserRoles(account: AccountInfo | null) {
@@ -249,7 +252,7 @@ const MainPage: React.FC = () => {
   }
   // Authenticated: show main app UI
   return (
-    <div className="App" style={{ background: '#18181b', minHeight: '100vh', color: 'white', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+    <div className="App" style={{ background: '#18181b', minHeight: '100vh', color: 'white', display: 'flex', flexDirection: 'column' }}>
       <div style={{ flex: 1 }}>
         <div style={{ padding: '20px 0', textAlign: 'center', fontWeight: 700, fontSize: 22 }}>
           DeepSlide
@@ -264,23 +267,22 @@ const MainPage: React.FC = () => {
   );
 };
 
-interface AppProps {
-  msalInstance: PublicClientApplication;
-}
 
-const App: React.FC<AppProps> = ({ msalInstance }) => {
+
+// TODO: Remove msalInstance prop, use Firebase Auth context instead
+const App: React.FC = () => {
   return (
-    <MsalProvider instance={msalInstance}>
-      <AuthInitializer />
+    <FirebaseAuthProvider>
       <CookieConsent />
       <Router>
         <Routes>
-          <Route path="/app/*" element={<MainPage />} />
-          <Route path="/" element={<LandingPageWithFooter />} />
+          <Route path="/" element={<div>Hello world</div>} />
+          <Route path="/account" element={<AccountPageGuard />} />
           <Route path="/files" element={<FilesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/enterprise" element={<EnterprisePage />} />
-          <Route path="/account" element={<AccountPageGuard />} />
+          <Route path="/search" element={<SearchInterface />} />
+          <Route path="/signup" element={<SignUpBox />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/impressum" element={<LegalPageLayout><Impressum /></LegalPageLayout>} />
           <Route path="/datenschutz" element={<LegalPageLayout><Datenschutzerklaerung /></LegalPageLayout>} />
           <Route path="/agb" element={<LegalPageLayout><AGB /></LegalPageLayout>} />
@@ -288,7 +290,7 @@ const App: React.FC<AppProps> = ({ msalInstance }) => {
           <Route path="/cookie-einstellungen" element={<CookieSettingsPage />} />
         </Routes>
       </Router>
-    </MsalProvider>
+    </FirebaseAuthProvider>
   );
 };
 

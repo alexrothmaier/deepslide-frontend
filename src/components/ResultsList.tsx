@@ -14,8 +14,6 @@ import {
 } from '@fluentui/react';
 import { useOfficeContext } from '../hooks/useOfficeContext.ts';
 import { SearchResult } from '../types';
-import { getAccessToken } from '../hooks/useMsalToken.ts';
-import { useMsal } from '@azure/msal-react';
 import './ResultsList.css';
 
 /// <reference types="office-js" />
@@ -56,7 +54,7 @@ interface FeedbackMap {
 
 // Authenticated fetch hook
 function useAuthFetch() {
-  const { instance, accounts } = useMsal();
+  const { instance, accounts } = useAuthContext();
   const account = accounts[0];
 
   const authFetch = async (url: string, options: any = {}) => {

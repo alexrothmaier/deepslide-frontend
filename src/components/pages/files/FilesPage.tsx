@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import LandingLayout from '../../pages/landing/LandingLayout.tsx';
-import Footer from '../../Footer.tsx';
-import { useMsalToken } from '../../../hooks/useMsalToken.ts';
+import { useFirebaseAuth } from '../../../auth/useFirebaseAuth.ts';
 import './FilesPage.css';
 
 interface FileInfo {
@@ -13,10 +12,10 @@ interface FileInfo {
 const API_URL = "http://localhost:8001";
 
 const FilesPage: React.FC = () => {
-  const { getToken, accounts } = useMsalToken(false);
+  const { user, loading, getIdToken } = useFirebaseAuth();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [status, setStatus] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
   const [fileList, setFileList] = useState<FileInfo[]>([]);
   const [listLoading, setListLoading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -26,16 +25,20 @@ const FilesPage: React.FC = () => {
   const dropRef = useRef<HTMLDivElement>(null);
 
   // Fetch .pptx file list from backend
+  // Fetch .pptx file list from backend
   const fetchFileList = useCallback(async () => {
     setListLoading(true);
     setStatus(null);
     try {
-      const token = await getToken();
-      if (!token) {
-        setStatus('You must be logged in to view your files.');
+      if (!user) {
+        // Only show the message if loading is false (auth check complete)
+        if (!loading) {
+          setStatus('You must be logged in to view your files.');
+        }
         setFileList([]);
         return;
       }
+      const token = await getIdToken();
       const response = await fetch(`${API_URL}/api/list-files`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -52,12 +55,11 @@ const FilesPage: React.FC = () => {
     } finally {
       setListLoading(false);
     }
-  }, [getToken]);
+  }, [user]);
 
   useEffect(() => {
     fetchFileList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accounts]);
+  }, [fetchFileList]);
 
   // File upload handler
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,13 +69,13 @@ const FilesPage: React.FC = () => {
 
   const handleUpload = async () => {
     if (!selectedFile) return;
-    setLoading(true);
+    setUploadLoading(true);
     setStatus(null);
     try {
-      const token = await getToken();
+      const token = await getIdToken();
       if (!token) {
         setStatus('You must be logged in to upload files.');
-        setLoading(false);
+        setUploadLoading(false);
         return;
       }
       const formData = new FormData();
@@ -91,9 +93,9 @@ const FilesPage: React.FC = () => {
         setStatus('Upload failed.');
       }
     } catch (e) {
-      setStatus('Error uploading file.');
+      setStatus('Error upuploadLoading file.');
     } finally {
-      setLoading(false);
+      setUploadLoading(false);
     }
   };
 
@@ -139,7 +141,7 @@ const FilesPage: React.FC = () => {
     if (!fileToDelete) return;
     setDeleteLoading(true);
     try {
-      const token = await getToken();
+      const token = await getIdToken();
       if (!token) {
         setStatus('You must be logged in to delete files.');
         setDeleteLoading(false);
@@ -196,15 +198,15 @@ const FilesPage: React.FC = () => {
             accept=".pptx"
             style={{ display: 'none' }}
             onChange={handleFileChange}
-            disabled={loading}
+            disabled={uploadLoading}
           />
           <button
             className="button-primary"
             style={{ marginTop: 16 }}
             onClick={handleUpload}
-            disabled={!selectedFile || loading}
+            disabled={!selectedFile || uploadLoading}
           >
-            {loading ? 'Uploading...' : 'Upload'}
+            {uploadLoading ? 'Uploading...' : 'Upload'}
           </button>
         </div>
         <div className="files-page__list">

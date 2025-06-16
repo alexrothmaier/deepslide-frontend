@@ -1,29 +1,25 @@
 import React, { useEffect } from 'react';
-import { useMsal } from '@azure/msal-react';
-import { InteractionStatus } from '@azure/msal-browser';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AccountPage from './AccountPage.tsx';
+import { useFirebaseAuth } from '../../../auth/useFirebaseAuth.ts';
 
 /**
- * Guards the Account page: if not authenticated, triggers login and redirects back after login.
+ * Guards the Account page: if not authenticated, redirects to login with redirectTo param.
  * If authenticated, renders the AccountPage.
  */
 const AccountPageGuard: React.FC = () => {
-  const { instance, accounts, inProgress } = useMsal();
-  const isAuthenticated = accounts && accounts.length > 0;
+  const { user, loading } = useFirebaseAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (!isAuthenticated && inProgress === InteractionStatus.None) {
-      instance.loginRedirect({
-        scopes: ['openid', 'profile', 'email'],
-        redirectUri: window.location.origin + '/account',
-      });
+    if (!loading && !user) {
+      navigate(`/login?redirectTo=${encodeURIComponent(location.pathname)}`);
     }
-  }, [isAuthenticated, inProgress, instance]);
+  }, [loading, user, navigate, location.pathname]);
 
-  if (!isAuthenticated) {
-    return <div style={{ color: 'white', textAlign: 'center', marginTop: '4rem' }}>Redirecting to login...</div>;
-  }
-
+  if (loading) return <div>Loading...</div>;
+  if (!user) return null;
   return <AccountPage />;
 };
 

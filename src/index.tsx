@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-import { msalConfig } from './msalConfig';
-import { PublicClientApplication } from '@azure/msal-browser';
+// import { msalConfig } from './msalConfig';
+// import { PublicClientApplication } from '@azure/msal-browser';
+// TODO: Import Firebase config
 import reportWebVitals from './reportWebVitals.ts';
 
 // Polyfill for environments (like Office.js) where window.history.replaceState may not exist
@@ -12,16 +13,16 @@ if (typeof window !== 'undefined' && (!window.history || !window.history.replace
   window.history.replaceState = function() {};
 }
 
-const msalInstance = new PublicClientApplication(msalConfig);
+// const msalInstance = new PublicClientApplication(msalConfig);
+// TODO: Initialize Firebase app here
 
 async function renderApp() {
-  await msalInstance.initialize();
   const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
   );
   root.render(
     <React.StrictMode>
-      <App msalInstance={msalInstance} />
+      <App />
     </React.StrictMode>
   );
 }

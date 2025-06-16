@@ -1,4 +1,7 @@
-export const msalConfig = {
+// MSAL config removed. Migrating to Firebase Auth.
+// Placeholder for Firebase config.
+// export const firebaseConfig = { ... };
+// See Firebase docs for setup.
   auth: {
     clientId: "dc5ab166-4380-4f7b-97eb-fbe6cf7a8402",
     authority: "https://deepslide.ciamlogin.com/c00d71ae-b6e5-4976-849e-9436e2ffce20/v2.0",
