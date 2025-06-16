@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import LandingLayout from '../landing/LandingLayout.tsx';
 import { useMsalToken } from '../../hooks/useMsalToken.ts';
-import styles from './FilesPage.module.css';
+import './FilesPage.css';
 
 interface FileInfo {
   filename: string;
@@ -169,13 +169,13 @@ const FilesPage: React.FC = () => {
 
   return (
     <LandingLayout>
-      <section className={styles['files-page']}>
-        <h1 className={styles['files-page__header']}>Your Files</h1>
-        {status && <div className={styles['files-page__status']} role="alert">{status}</div>}
-        <div className={styles['files-page__upload']}>
+      <section className="files-page">
+        <h1 className="files-page__header">Your Files</h1>
+        {status && <div className="files-page__status">{status}</div>}
+        <div className="files-page__upload">
           <div
             ref={dropRef}
-            className={dropActive ? `${styles['files-page__drop']} ${styles['files-page__drop--active']}` : styles['files-page__drop']}
+            className={dropActive ? "files-page__drop files-page__drop--active" : "files-page__drop"}
             tabIndex={0}
             aria-label="Drag and drop a file here or click to select"
             onClick={() => {
@@ -206,7 +206,7 @@ const FilesPage: React.FC = () => {
             {loading ? 'Uploading...' : 'Upload'}
           </button>
         </div>
-        <div className={styles['files-page__list']}>
+        <div className="files-page__list">
           <h3 style={{ marginBottom: 16 }}>Your .pptx Files</h3>
           {listLoading ? (
             <div>Loading files...</div>
@@ -215,12 +215,12 @@ const FilesPage: React.FC = () => {
           ) : (
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {fileList.map((f) => (
-                <li key={f.filename} className={styles['files-page__file-row']}>
-                  <span className={styles['files-page__file-name']}>{f.filename}</span>
-                  <span className={styles['files-page__file-size']}>{(f.size/1024/1024).toFixed(2)} MB</span>
-                  {f.last_modified && <span className={styles['files-page__file-date']}>{new Date(f.last_modified).toLocaleString()}</span>}
+                <li key={f.filename} className="files-page__file-row">
+                  <span className="files-page__file-name">{f.filename}</span>
+                  <span className="files-page__file-size">{(f.size/1024/1024).toFixed(2)} MB</span>
+                  {f.last_modified && <span className="files-page__file-date">{new Date(f.last_modified).toLocaleString()}</span>}
                   <button
-                    className={styles['files-page__delete-btn']}
+                    className="files-page__delete-btn"
                     title="Delete file"
                     aria-label={`Delete file ${f.filename}`}
                     onClick={() => handleDeleteClick(f)}
@@ -234,12 +234,12 @@ const FilesPage: React.FC = () => {
           )}
         </div>
         {deleteDialogOpen && (
-          <div className={styles['files-page__dialog']} role="dialog" aria-modal="true">
+          <div className="files-page__dialog" role="dialog" aria-modal="true">
             <div style={{ marginBottom: '1rem', fontWeight: 600 }}>Delete File</div>
             <div style={{ marginBottom: '1rem' }}>
               {fileToDelete ? `Are you sure you want to delete "${fileToDelete.filename}"? This action cannot be undone.` : ''}
             </div>
-            <div className={styles['files-page__dialog-footer']}>
+            <div className="files-page__dialog-footer">
               <button
                 className="button-danger"
                 onClick={handleConfirmDelete}
