@@ -50,14 +50,54 @@ const LoginBox: React.FC<LoginBoxProps> = ({
           <span className="login-divider-or">or</span>
           <span className="login-divider-line" />
         </div>
-        <button
-          className="login-submit-btn email-green"
-          style={{ marginTop: 18, width: '100%' }}
-          onClick={onMicrosoftLogin}
-          type="button"
-        >
-          Log in with Email &amp; Password
-        </button>
+        <form onSubmit={handleLogin} className="login-form">
+          <label htmlFor="email" className="login-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            className="login-input"
+            placeholder="Enter your email address"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            autoComplete="email"
+          />
+          <label htmlFor="password" className="login-label">Password</label>
+          <input
+            id="password"
+            type="password"
+            className="login-input"
+            placeholder="Enter your password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            autoComplete="current-password"
+            aria-invalid={!!error}
+            style={error ? { border: '1.5px solid #ff4444' } : {}}
+          />
+          {error && (
+            <div style={{ color: '#ff4444', marginTop: 4, fontSize: 14 }} role="alert">
+              {error}
+            </div>
+          )}
+          <div className="login-links-row">
+            <span className="login-link">Forgot password? <a href="#" className="login-link-action">Send reset code.</a></span>
+          </div>
+          <button type="submit" className="login-submit-btn">Log in</button>
+        </form>
+        <div className="login-signup-row">
+          Don't have an account?{' '}
+          <a
+            href="#"
+            className="login-link-action"
+            onClick={e => {
+              e.preventDefault();
+              if (onShowSignUp) onShowSignUp();
+            }}
+          >
+            Sign up.
+          </a>
+        </div>
         {loading && (
           <div className="login-loading-bar">
             <span className="login-loading-inner" />
