@@ -8,7 +8,8 @@ import LandingPage from './components/LandingPage.tsx';
 import FilesPage from './components/pages/FilesPage.tsx';
 import PricingPage from './components/pages/PricingPage.tsx';
 import EnterprisePage from './components/pages/EnterprisePage.tsx';
-import AccountPage from './components/pages/AccountPage.tsx';
+import AccountPageGuard from './components/pages/AccountPageGuard.tsx';
+import AuthInitializer from './components/AuthInitializer.tsx';
 
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
@@ -260,6 +261,7 @@ interface AppProps {
 const App: React.FC<AppProps> = ({ msalInstance }) => {
   return (
     <MsalProvider instance={msalInstance}>
+      <AuthInitializer />
       <Router>
         <Routes>
           <Route path="/app/*" element={<MainPage />} />
@@ -267,7 +269,7 @@ const App: React.FC<AppProps> = ({ msalInstance }) => {
           <Route path="/files" element={<FilesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/enterprise" element={<EnterprisePage />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/account" element={<AccountPageGuard />} />
         </Routes>
       </Router>
     </MsalProvider>
