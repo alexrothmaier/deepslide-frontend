@@ -1,6 +1,6 @@
 import React from 'react';
-import LandingLayout from '../landing/LandingLayout.tsx';
-import Footer from '../Footer.tsx';
+import LandingLayout from '../../pages/landing/LandingLayout.tsx';
+import Footer from '../../Footer.tsx';
 import './PricingPage.css';
 
 const plans = [

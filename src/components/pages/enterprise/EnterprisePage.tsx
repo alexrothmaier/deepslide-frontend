@@ -1,5 +1,5 @@
 import React from 'react';
-import LandingLayout from '../landing/LandingLayout.tsx';
+import LandingLayout from '../../pages/landing/LandingLayout.tsx';
 
 const EnterprisePage: React.FC = () => {
   return (

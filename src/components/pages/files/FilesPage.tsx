@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import LandingLayout from '../landing/LandingLayout.tsx';
-import { useMsalToken } from '../../hooks/useMsalToken.ts';
+import LandingLayout from '../../pages/landing/LandingLayout.tsx';
+import Footer from '../../Footer.tsx';
+import { useMsalToken } from '../../../hooks/useMsalToken.ts';
 import './FilesPage.css';
 
 interface FileInfo {

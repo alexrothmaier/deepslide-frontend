@@ -1,6 +1,6 @@
 import React from 'react';
-import LandingLayout from './landing/LandingLayout.tsx';
-import HeroSection from './landing/HeroSection.tsx';
+import LandingLayout from './LandingLayout.tsx';
+import HeroSection from './HeroSection.tsx';
 
 const LandingPage: React.FC = () => {
   return (

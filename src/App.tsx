@@ -4,11 +4,11 @@ import { initializeIcons, Spinner, SpinnerSize, MessageBar, MessageBarType, Stac
 import SearchInterface from './components/SearchInterface.tsx';
 import LoginBox from './components/LoginBox.tsx';
 import SignUpBox from './components/SignUpBox.tsx';
-import LandingPage from './components/LandingPage.tsx';
-import FilesPage from './components/pages/FilesPage.tsx';
-import PricingPage from './components/pages/PricingPage.tsx';
-import EnterprisePage from './components/pages/EnterprisePage.tsx';
-import AccountPageGuard from './components/pages/AccountPageGuard.tsx';
+import LandingPage from './components/pages/landing/LandingPage.tsx';
+import FilesPage from './components/pages/files/FilesPage.tsx';
+import PricingPage from './components/pages/pricing/PricingPage.tsx';
+import EnterprisePage from './components/pages/enterprise/EnterprisePage.tsx';
+import AccountPageGuard from './components/pages/account/AccountPageGuard.tsx';
 import AuthInitializer from './components/AuthInitializer.tsx';
 import Footer from './components/Footer.tsx';
 import CookieConsent from './components/CookieConsent.tsx';
