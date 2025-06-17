@@ -23,6 +23,25 @@ const FilesPage: React.FC = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [dropActive, setDropActive] = useState(false);
   const dropRef = useRef<HTMLDivElement>(null);
+  const deleteTooltipRef = useRef<HTMLDivElement | null>(null);
+
+  // Close delete tooltip on outside click
+  useEffect(() => {
+    if (!deleteDialogOpen) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        deleteTooltipRef.current &&
+        !deleteTooltipRef.current.contains(event.target as Node)
+      ) {
+        setDeleteDialogOpen(false);
+        setFileToDelete(null);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [deleteDialogOpen]);
 
   // Fetch .pptx file list from backend
   // Fetch .pptx file list from backend
@@ -173,7 +192,7 @@ const FilesPage: React.FC = () => {
   return (
     <LandingLayout>
       <section className="files-page">
-        <h1 className="files-page__header">Your Files</h1>
+        <h2 className="files-page__header files-page__header--centered">Manage your files</h2>
         {status && <div className="files-page__status">{status}</div>}
         <div className="files-page__upload">
           <div
@@ -201,13 +220,18 @@ const FilesPage: React.FC = () => {
             disabled={uploadLoading}
           />
           <button
-            className="button-primary"
+            className="files-page__upload-btn files-page__upload-btn--green"
             style={{ marginTop: 16 }}
             onClick={handleUpload}
             disabled={!selectedFile || uploadLoading}
           >
             {uploadLoading ? 'Uploading...' : 'Upload'}
           </button>
+          {uploadLoading && (
+              <div className="files-page__upload-loading-bar" role="progressbar" aria-label="Uploading file">
+                <span className="files-page__upload-loading-inner" />
+              </div>
+            )}
         </div>
         <div className="files-page__list">
           <h3 style={{ marginBottom: 16 }}>Your .pptx Files</h3>
@@ -218,48 +242,61 @@ const FilesPage: React.FC = () => {
           ) : (
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {fileList.map((f) => (
-                <li key={f.filename} className="files-page__file-row">
-                  <span className="files-page__file-name">{f.filename}</span>
-                  <span className="files-page__file-size">{(f.size/1024/1024).toFixed(2)} MB</span>
-                  {f.last_modified && <span className="files-page__file-date">{new Date(f.last_modified).toLocaleString()}</span>}
-                  <button
-                    className="files-page__delete-btn"
-                    title="Delete file"
-                    aria-label={`Delete file ${f.filename}`}
-                    onClick={() => handleDeleteClick(f)}
-                    disabled={deleteLoading}
-                  >
-                    &#128465;
-                  </button>
-                </li>
-              ))}
+  <li key={f.filename} className="files-page__file-row">
+    <span className="files-page__file-name">{f.filename}</span>
+    <span className="files-page__file-size">{(f.size/1024/1024).toFixed(2)} MB</span>
+    {f.last_modified && <span className="files-page__file-date">{new Date(f.last_modified).toLocaleString()}</span>}
+    <span style={{ position: 'relative', display: 'inline-block' }}>
+      <button
+        className="files-page__delete-btn"
+        title="Delete file"
+        aria-label={`Delete file ${f.filename}`}
+        onClick={() => handleDeleteClick(f)}
+        disabled={deleteLoading}
+      >
+        &#128465;
+      </button>
+      {deleteDialogOpen && fileToDelete && fileToDelete.filename === f.filename && (
+  <div
+    className="files-page__delete-tooltip"
+    role="dialog"
+    aria-modal="true"
+    ref={deleteTooltipRef}
+  >
+    <div className="files-page__delete-tooltip-arrow" />
+    <div className="files-page__delete-tooltip-content">
+      <div style={{ marginBottom: 8, fontWeight: 600, fontSize: 15 }}>Delete?</div>
+      <div style={{ marginBottom: 10, fontSize: 13, color: '#f87171' }}>
+        Are you sure?
+      </div>
+      <div style={{ display: 'flex', gap: 6 }}>
+        <button
+          className="files-page__delete-tooltip-btn files-page__delete-tooltip-btn--danger"
+          onClick={handleConfirmDelete}
+          disabled={deleteLoading}
+          style={{ minWidth: 48 }}
+        >
+          {deleteLoading ? '...' : 'Delete'}
+        </button>
+        <button
+          className="files-page__delete-tooltip-btn files-page__delete-tooltip-btn--cancel"
+          onClick={handleCancelDelete}
+          disabled={deleteLoading}
+          style={{ minWidth: 48 }}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+    </span>
+  </li>
+))} 
             </ul>
           )}
         </div>
-        {deleteDialogOpen && (
-          <div className="files-page__dialog" role="dialog" aria-modal="true">
-            <div style={{ marginBottom: '1rem', fontWeight: 600 }}>Delete File</div>
-            <div style={{ marginBottom: '1rem' }}>
-              {fileToDelete ? `Are you sure you want to delete "${fileToDelete.filename}"? This action cannot be undone.` : ''}
-            </div>
-            <div className="files-page__dialog-footer">
-              <button
-                className="button-danger"
-                onClick={handleConfirmDelete}
-                disabled={deleteLoading}
-              >
-                {deleteLoading ? 'Deleting...' : 'Delete'}
-              </button>
-              <button
-                className="button-secondary"
-                onClick={handleCancelDelete}
-                disabled={deleteLoading}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        )}
+        
       </section>
     </LandingLayout>
   );
