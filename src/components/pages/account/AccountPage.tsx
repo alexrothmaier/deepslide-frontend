@@ -77,7 +77,7 @@ const AccountPage: React.FC = () => {
     setLoggingOut(true);
     try {
       await logout();
-      window.location.href = '/';
+      navigate('/');
     } finally {
       setLoggingOut(false);
     }

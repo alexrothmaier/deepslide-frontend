@@ -12,13 +12,16 @@ const AccountPageGuard: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  console.log('[AccountPageGuard] Render', { user, loading, path: location.pathname });
+
   useEffect(() => {
+    console.log('[AccountPageGuard] useEffect', { loading, user, path: location.pathname });
     if (!loading && !user) {
       navigate(`/login?redirectTo=${encodeURIComponent(location.pathname)}`);
     }
   }, [loading, user, navigate, location.pathname]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return null;
   if (!user) return null;
   return <AccountPage />;
 };

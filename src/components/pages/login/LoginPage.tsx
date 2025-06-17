@@ -3,35 +3,44 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from 'firebase/auth';
 import { auth } from '../../../firebase.ts';
 import LoginBox from '../../LoginBox.tsx';
-import SignUpBox from '../../SignUpBox.tsx';
 import '../../LoginBox.css';
+import SignupPage from '../signup/SignupPage.tsx';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showSignUp, setShowSignUp] = useState(false);
 
-  // Parse redirectTo param from query string
-  const params = new URLSearchParams(location.search);
-  const redirectTo = params.get('redirectTo') || '/account';
 
   // Handler for email/password login
   const handleEmailLogin = async (email: string, password: string) => {
+    console.log('[LoginPage] handleEmailLogin called', { email });
     setLoading(true);
     setError(null);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate(redirectTo, { replace: true });
+      console.log('[LoginPage] Login successful, navigating to /account');
+      navigate('/account', { replace: true });
+      console.log('[LoginPage] Navigated to /account');
     } catch (err: any) {
+      console.error('[LoginPage] Login error:', err);
       setError(err.message || 'Login failed');
     } finally {
       setLoading(false);
     }
   };
+
+  // ...
+
+  // In the JSX, ensure error is displayed:
+  // {error && <div className="login-error-message">{error}</div>}
+
 
   // Handler for Google login
   const handleGoogleLogin = async () => {
@@ -40,7 +49,7 @@ const LoginPage: React.FC = () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      navigate(redirectTo, { replace: true });
+      navigate('/account', { replace: true });
     } catch (err: any) {
       setError(err.message || 'Google login failed');
     } finally {
@@ -74,15 +83,7 @@ const LoginPage: React.FC = () => {
   const handleShowLogin = () => setShowSignUp(false);
 
   return showSignUp ? (
-    <SignUpBox
-      onSignUp={handleEmailSignUp}
-      loading={loading}
-      error={error}
-      onShowLogin={handleShowLogin}
-      // You can implement these if needed:
-      onGoogleSignUp={undefined}
-      onGithubSignUp={undefined}
-    />
+    <SignupPage />
   ) : (
     <LoginBox
       onLogin={handleEmailLogin}

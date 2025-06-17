@@ -164,7 +164,7 @@ const UploadPage: React.FC<UploadPageProps> = ({ showBackButton }) => {
   return (
     <div style={{ maxWidth: 520, margin: '0 auto', padding: 24 }}>
       {showBackButton && (
-        <button onClick={() => window.history.back()} style={{ marginBottom: 16 }}>Back</button>
+        <button onClick={() => navigate(-1)} style={{ marginBottom: 16 }}>Back</button>
       )}
       <div
         ref={dropRef}
