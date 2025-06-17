@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   width: 100%;
   max-width: 98vw;
   background: rgba(17, 17, 17, 0.98);
@@ -33,6 +34,7 @@
   align-items: center;
   margin-right: 2.5rem;
   height: 120px;
+  justify-content: flex-start;
 }
 
 .navbar__logo img {
@@ -42,9 +44,14 @@
 }
 
 .navbar__nav {
-  flex: 1;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
+  transform: translateX(-50%);
 }
 
 .navbar__nav-list {
@@ -97,6 +104,7 @@
 .navbar__account {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .navbar__account--left {

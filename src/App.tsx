@@ -276,7 +276,7 @@ const App: React.FC = () => {
       <CookieConsent />
       <Router>
         <Routes>
-          <Route path="/" element={<div>Hello world</div>} />
+          <Route path="/" element={<LandingPageWithFooter />} />
           <Route path="/account" element={<AccountPageGuard />} />
           <Route path="/files" element={<FilesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
