@@ -88,22 +88,22 @@ const LoginBox: React.FC<LoginBoxProps> = ({
             </div>
           )}
           <div className="login-links-row">
-            <span className="login-link">Forgot password? <a href="#" className="login-link-action">Send reset code.</a></span>
+            <span className="login-link">Forgot password? <button type="button" className="login-link-action" style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}>Send reset code.</button></span>
           </div>
           <button type="submit" className="login-submit-btn">Log in</button>
         </form>
         <div className="login-signup-row">
           Don't have an account?{' '}
-          <a
-            href="#"
-            className="login-link-action"
-            onClick={e => {
-              e.preventDefault();
-              if (onShowSignUp) onShowSignUp();
-            }}
-          >
-            Sign up.
-          </a>
+            <button
+              type="button"
+              className="login-link-action"
+              onClick={() => {
+                if (onShowSignUp) onShowSignUp();
+              }}
+              style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
+            >
+              Sign up.
+            </button>
         </div>
         {loading && (
           <div className="login-loading-bar">

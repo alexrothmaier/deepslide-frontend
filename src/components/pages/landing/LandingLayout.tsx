@@ -1,7 +1,7 @@
 import React from 'react';
-import NavBar from '../../NavBar.tsx';
+import NavBar from '../../NavBar/NavBar.tsx';
 import './LandingLayout.css';
-import Footer from '../../Footer.tsx';
+import Footer from '../../Footer/Footer.tsx';
 interface Props {
   children: React.ReactNode;
 }

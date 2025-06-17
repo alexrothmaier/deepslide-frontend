@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from 'firebase/auth';
 import { auth } from '../../../firebase.ts';
-import LoginBox from '../../LoginBox.tsx';
-import '../../LoginBox.css';
+import LoginBox from './LoginBox.tsx';
+import './LoginBox.css';
 import SignupPage from '../signup/SignupPage.tsx';
 
 const LoginPage: React.FC = () => {

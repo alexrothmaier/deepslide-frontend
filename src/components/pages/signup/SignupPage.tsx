@@ -41,7 +41,6 @@ const SignupPage: React.FC = () => {
   const handleGoogleSignUp = () => alert('Google signup not implemented');
   const handleLinkedinSignUp = () => alert('LinkedIn signup not implemented');
   const handleMicrosoftSignUp = () => alert('Microsoft signup not implemented');
-  const handleGithubSignUp = () => alert('GitHub signup not implemented');
 
   const handleShowLogin = () => {
     window.location.href = '/login';
@@ -146,7 +145,12 @@ const SignupPage: React.FC = () => {
           </button>
         </form>
         <div className="login-signup-row">
-          Already have an account? <a href="#" className="login-link-action" onClick={e => { e.preventDefault(); handleShowLogin(); }}>Log in</a>.
+          Already have an account? <button
+  type="button"
+  className="login-link-action"
+  onClick={handleShowLogin}
+  style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
+>Log in</button>.
         </div>
         {error && (
           <div style={{ color: '#ff4444', marginTop: 4, fontSize: 14 }} role="alert">

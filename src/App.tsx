@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { initializeIcons } from '@fluentui/react';
-import SearchInterface from './components/SearchInterface.tsx';
 import SignupPage from './components/pages/signup/SignupPage.tsx';
 import LandingPage from './components/pages/landing/LandingPage.tsx';
 import FilesPage from './components/pages/files/FilesPage.tsx';
 import PricingPage from './components/pages/pricing/PricingPage.tsx';
 import EnterprisePage from './components/pages/enterprise/EnterprisePage.tsx';
 import AccountPageGuard from './components/pages/account/AccountPageGuard.tsx';
-import AuthInitializer from './components/AuthInitializer.tsx';
-import Footer from './components/Footer.tsx';
-import CookieConsent from './components/CookieConsent.tsx';
+import Footer from './components/Footer/Footer.tsx';
+import CookieConsent from './components/CookieConsent/CookieConsent.tsx';
 import Impressum from './components/legal/Impressum.tsx';
 import Datenschutzerklaerung from './components/legal/Datenschutzerklaerung.tsx';
 import AGB from './components/legal/AGB.tsx';
@@ -18,7 +16,7 @@ import Widerruf from './components/legal/Widerruf.tsx';
 
 
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/pages/login/LoginPage.tsx';
 import { FirebaseAuthProvider } from './auth/FirebaseAuthProvider.tsx';
 
@@ -42,7 +40,6 @@ const App: React.FC = () => {
           <Route path="/files" element={<FilesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/enterprise" element={<EnterprisePage />} />
-          <Route path="/search" element={<SearchInterface />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/impressum" element={<LegalPageLayout><Impressum /></LegalPageLayout>} />
