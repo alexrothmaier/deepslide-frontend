@@ -181,6 +181,10 @@ const AccountPage: React.FC = () => {
                     </span>
                   )}
                 </div>
+                <div style={{ fontSize: 15 }}>
+                  <span style={{ color: '#888' }}>Slides processed:&nbsp;</span>
+                  <span style={{ color: '#36d1c4', fontWeight: 600 }}>{quota.slides_processed ?? 0}</span>
+                </div>
               </div>
             ) : null}
           </div>
