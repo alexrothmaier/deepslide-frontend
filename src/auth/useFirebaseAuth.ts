@@ -1,6 +1,6 @@
 import { useAuthContext } from './FirebaseAuthProvider.tsx';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, UserCredential } from 'firebase/auth';
-import { auth } from '../firebase.ts';
+import { auth } from '../firebase/firebase.ts';
 
 export function useFirebaseAuth() {
   const { user, loading, error, logout, refreshUser } = useAuthContext();
