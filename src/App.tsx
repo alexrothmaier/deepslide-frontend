@@ -276,7 +276,7 @@ const App: React.FC = () => {
       <CookieConsent />
       <Router>
         <Routes>
-          <Route path="/" element={<LandingPageWithFooter />} />
+          <Route path="/" element={<PageWithFooter><LandingPage /></PageWithFooter>} />
           <Route path="/account" element={<AccountPageGuard />} />
           <Route path="/files" element={<FilesPage />} />
           <Route path="/pricing" element={<PricingPage />} />
@@ -296,10 +296,10 @@ const App: React.FC = () => {
 };
 
 // Wrap LandingPage with Footer for legal links
-const LandingPageWithFooter: React.FC = () => (
+const PageWithFooter: React.FC<{children: React.ReactNode}> = ({ children }) => (
   <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
     <div style={{ flex: 1 }}>
-      <LandingPage />
+      {children}
     </div>
     <Footer />
   </div>

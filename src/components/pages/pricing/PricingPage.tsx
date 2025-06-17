@@ -70,10 +70,10 @@ const PricingPage: React.FC = () => {
     <LandingLayout>
       <section
         style={{
+          flex: 1,
           padding: '4rem 1rem',
           color: 'white',
           background: 'rgba(17, 17, 17, 0.98)',
-          minHeight: '100vh',
         }}
       >
         <h1 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: 8, textAlign: 'center' }}>Plans and Pricing</h1>

@@ -7,8 +7,13 @@
 }
 
 .landing-layout__content {
+flex: 1 1 auto;
+overflow-y: auto;
+display: flex;
+ flex-direction: column;
+  min-height: 0;
   padding: 0;
-}
+ }
 
 /* Optional subtle grid background */
 .landing-layout::before {
