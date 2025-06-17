@@ -172,9 +172,13 @@ const AccountPage: React.FC = () => {
                 <div style={{ fontSize: 15 }}>
                   <span style={{ color: '#888' }}>Storage used:&nbsp;</span>
                   {quota.storage_quota.limit === null ? (
-                    <span style={{ color: '#a259ff', fontWeight: 600 }}>Unlimited</span>
+                    <span style={{ color: '#a259ff', fontWeight: 600 }}>
+                      {(quota.storage_quota.used / 1048576).toFixed(2)} MB (Unlimited allowed)
+                    </span>
                   ) : (
-                    <span style={{ color: '#00bfae', fontWeight: 600 }}>{(quota.storage_quota.used / 1048576).toFixed(2)} MB / {(quota.storage_quota.limit / 1048576).toFixed(0)} MB</span>
+                    <span style={{ color: '#00bfae', fontWeight: 600 }}>
+                      {(quota.storage_quota.used / 1048576).toFixed(2)} MB / {(quota.storage_quota.limit / 1048576).toFixed(0)} MB
+                    </span>
                   )}
                 </div>
               </div>
