@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+// Use the blue accent color from navbar hover
+const accentColor = process.env.REACT_APP_ACCENT_COLOR || "#38bdf8"; // #00bfae (previous teal)
+
 const Footer: React.FC = () => (
   <footer
     style={{
@@ -17,11 +20,11 @@ const Footer: React.FC = () => (
     }}
   >
     <div style={{ marginBottom: 10 }}>
-      <Link to="/impressum" style={{ color: "#00bfae", margin: "0 16px" }}>Impressum</Link>
-      <Link to="/datenschutz" style={{ color: "#00bfae", margin: "0 16px" }}>Datenschutzerklärung</Link>
-      <Link to="/agb" style={{ color: "#00bfae", margin: "0 16px" }}>AGB</Link>
-      <Link to="/widerruf" style={{ color: "#00bfae", margin: "0 16px" }}>Widerruf</Link>
-      <Link to="/cookie-einstellungen" style={{ color: "#00bfae", margin: "0 16px" }}>Cookie-Einstellungen</Link>
+      <Link to="/impressum" style={{ color: accentColor, margin: "0 16px" }}>Impressum</Link>
+      <Link to="/datenschutz" style={{ color: accentColor, margin: "0 16px" }}>Datenschutzerklärung</Link>
+      <Link to="/agb" style={{ color: accentColor, margin: "0 16px" }}>AGB</Link>
+      <Link to="/widerruf" style={{ color: accentColor, margin: "0 16px" }}>Widerruf</Link>
+      <Link to="/cookie-einstellungen" style={{ color: accentColor, margin: "0 16px" }}>Cookie-Einstellungen</Link>
     </div>
     <div style={{ opacity: 0.6 }}>
       &copy; {new Date().getFullYear()} DeepSlide. Alle Rechte vorbehalten.

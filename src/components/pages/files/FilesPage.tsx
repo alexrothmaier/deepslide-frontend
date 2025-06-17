@@ -232,7 +232,13 @@ const FilesPage: React.FC = () => {
 
   return (
     <LandingLayout>
-      <section className="files-page">
+      {/* Inject accent color from env as CSS variable for use in CSS */}
+      <section
+        className="files-page"
+        style={{
+          '--accent-color': process.env.REACT_APP_ACCENT_COLOR || '#00bfae',
+        } as React.CSSProperties}
+      >
         <h2 className="files-page__header files-page__header--centered">Manage your files</h2>
         <div className="files-page__status" role="status" aria-live="polite">
           {status}

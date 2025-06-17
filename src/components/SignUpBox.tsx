@@ -36,7 +36,13 @@ const SignUpBox: React.FC<SignUpBoxProps> = ({
 
   return (
     <div className="login-bg">
-      <div className="login-container">
+      {/* Inject accent color from env as CSS variable for use in CSS */}
+      <div
+        className="login-container"
+        style={{
+          '--accent-color': process.env.REACT_APP_ACCENT_COLOR || '#00bfae',
+        } as React.CSSProperties}
+      >
         <img src="/deepslide-logo-text.png" alt="Logo" className="login-logo" />
         <h2 className="login-title">Sign up</h2>
         <button className="login-provider-btn google" onClick={onGoogleSignUp} type="button">
@@ -119,7 +125,7 @@ const SignUpBox: React.FC<SignUpBoxProps> = ({
               required
             />
             <label htmlFor="accept" style={{ fontSize: 14, color: '#ccc' }}>
-              By signing up you agree to the <a href="#" style={{ color: '#00bfae', textDecoration: 'underline' }}>terms and services</a> and the <a href="#" style={{ color: '#00bfae', textDecoration: 'underline' }}>privacy policy</a>.
+              By signing up you agree to the <a href="/legal/AGB" style={{ color: 'var(--accent-color)', textDecoration: 'underline' }}>terms and services</a> and the <a href="/legal/Datenschutzerklaerung" style={{ color: 'var(--accent-color)', textDecoration: 'underline' }}>privacy policy</a>.
             </label>
           </div>
           <button type="submit" className="login-submit-btn" style={{ marginTop: 18 }} disabled={loading || !accepted}>

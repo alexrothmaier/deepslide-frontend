@@ -30,7 +30,14 @@ const LoginBox: React.FC<LoginBoxProps> = ({
 
   return (
     <div className="login-bg">
-      <div className="login-container">
+      {/* Inject accent color from env as CSS variable for use in CSS */}
+      <div
+        className="login-container"
+        style={{
+          // Set CSS variable for accent color, fallback to #00bfae
+          '--accent-color': process.env.REACT_APP_ACCENT_COLOR || '#00bfae',
+        } as React.CSSProperties}
+      >
         <img src="/deepslide-logo-text.png" alt="Logo" className="login-logo" />
         <h2 className="login-title">Log in</h2>
         <button className="login-provider-btn google" onClick={onGoogleLogin} type="button">
