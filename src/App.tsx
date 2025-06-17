@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { initializeIcons } from '@fluentui/react';
 import SignupPage from './components/pages/signup/SignupPage.tsx';
 import LandingPage from './components/pages/landing/LandingPage.tsx';
-import FilesPage from './components/pages/files/FilesPage.tsx';
+import FilesPageGuard from './components/pages/files/FilesPageGuard.tsx';
 import PricingPage from './components/pages/pricing/PricingPage.tsx';
 import EnterprisePage from './components/pages/enterprise/EnterprisePage.tsx';
 import AccountPageGuard from './components/pages/account/AccountPageGuard.tsx';
@@ -37,7 +37,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<PageWithFooter><LandingPage /></PageWithFooter>} />
           <Route path="/account" element={<AccountPageGuard />} />
-          <Route path="/files" element={<FilesPage />} />
+          <Route path="/files" element={<FilesPageGuard />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/enterprise" element={<EnterprisePage />} />
           <Route path="/signup" element={<SignupPage />} />

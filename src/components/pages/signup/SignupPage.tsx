@@ -147,9 +147,9 @@ const SignupPage: React.FC = () => {
         <div className="login-signup-row">
           Already have an account? <button
   type="button"
-  className="login-link-action"
+  className="login-link-action login-accent-btn"
   onClick={handleShowLogin}
-  style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
+  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent-color)', textDecoration: 'underline', cursor: 'pointer' }}
 >Log in</button>.
         </div>
         {error && (

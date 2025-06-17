@@ -87,23 +87,32 @@ const LoginBox: React.FC<LoginBoxProps> = ({
               {error}
             </div>
           )}
-          <div className="login-links-row">
-            <span className="login-link">Forgot password? <button type="button" className="login-link-action" style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}>Send reset code.</button></span>
-          </div>
+          <div className="login-links-row" style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: 8 }}>
+  <span className="login-link" style={{ textAlign: 'center' }}>
+    Forgot password?{' '}
+    <button
+      type="button"
+      className="login-link-action login-accent-btn"
+      style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent-color)', textDecoration: 'underline', cursor: 'pointer' }}
+    >
+      Send reset code.
+    </button>
+  </span>
+</div>
           <button type="submit" className="login-submit-btn">Log in</button>
         </form>
         <div className="login-signup-row">
           Don't have an account?{' '}
             <button
-              type="button"
-              className="login-link-action"
-              onClick={() => {
-                if (onShowSignUp) onShowSignUp();
-              }}
-              style={{ background: 'none', border: 'none', padding: 0, color: 'inherit', textDecoration: 'underline', cursor: 'pointer' }}
-            >
-              Sign up.
-            </button>
+  type="button"
+  className="login-link-action login-accent-btn"
+  onClick={() => {
+    if (onShowSignUp) onShowSignUp();
+  }}
+  style={{ background: 'none', border: 'none', padding: 0, color: 'var(--accent-color)', textDecoration: 'underline', cursor: 'pointer' }}
+>
+  Sign up.
+</button>
         </div>
         {loading && (
           <div className="login-loading-bar">
