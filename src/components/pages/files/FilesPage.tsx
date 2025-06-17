@@ -7,6 +7,7 @@ interface FileInfo {
   filename: string;
   size: number;
   last_modified?: string;
+  status?: string;
 }
 
 const API_URL = "http://localhost:8001";
@@ -282,7 +283,15 @@ const FilesPage: React.FC = () => {
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {fileList.map((f) => (
                 <li key={f.filename} className="files-page__file-row">
-                  <span className="files-page__file-name">{f.filename}</span>
+                  <span className="files-page__status-indicator">
+  {f.status === 'processing' && (
+    <span className="files-page__spinner" title="Processing" aria-label="Processing" />
+  )}
+  {f.status === 'completed' && (
+    <span className="files-page__checkmark" title="Completed" aria-label="Completed">&#10003;</span>
+  )}
+</span>
+<span className="files-page__file-name">{f.filename}</span>
                   <span className="files-page__file-size">{(f.size/1024/1024).toFixed(2)} MB</span>
                   {f.last_modified && <span className="files-page__file-date">{new Date(f.last_modified).toLocaleString()}</span>}
                   <span style={{ position: 'relative', display: 'inline-block' }}>
@@ -325,6 +334,7 @@ const FilesPage: React.FC = () => {
                             >
                               Cancel
                             </button>
+                            
                           </div>
                         </div>
                       </div>

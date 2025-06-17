@@ -1,5 +1,48 @@
 /* FilesPage styles migrated from FilesPage.module.css */
 
+.files-page__status-indicator {
+  display: inline-block;
+  width: 28px;
+  min-width: 28px;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.files-page__spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #38bdf8;
+  border-top: 3px solid #18181b;
+  border-radius: 50%;
+  animation: files-page-spinner-rotate 0.8s linear infinite;
+  margin-right: 2px;
+  vertical-align: middle;
+}
+
+@keyframes files-page-spinner-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.files-page__checkmark {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #22c55e;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 18px;
+  text-align: center;
+  margin-right: 2px;
+  vertical-align: middle;
+  box-shadow: 0 1px 4px #0003;
+}
+
+
 .files-page {
   padding: 4rem 1rem;
   color: #fff;
