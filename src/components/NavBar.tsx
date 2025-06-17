@@ -13,9 +13,9 @@ const NavBar: React.FC = () => {
   return (
     <header className="navbar">
       <div className="navbar__container">
-        <div className="navbar__account navbar__account--left">
+        <div className="navbar__logo">
           <Link to="/" title="Home">
-            <img src="/deepslide-logo.png" alt="Home" className="navbar__account-icon" />
+            <img src="/deepslide-logo-text.png" alt="Deepslide Home" style={{ height: '120px', width: 'auto', display: 'block' }} />
           </Link>
         </div>
 

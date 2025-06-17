@@ -25,18 +25,18 @@
   min-height: 92px;
   height: 92px;
   gap: 1.2rem;
+  margin-top: 1.2rem;
 }
 
 .navbar__logo {
   display: flex;
   align-items: center;
   margin-right: 2.5rem;
-  min-width: 220px;
-  height: 72px;
+  height: 120px;
 }
 
 .navbar__logo img {
-  height: 72px;
+  height: 120px;
   width: auto;
   display: block;
 }
@@ -79,6 +79,7 @@
     align-items: stretch;
     padding: 0.5rem 1rem;
     gap: 1rem;
+    margin-top: 1rem;
   }
   .navbar__logo {
     margin-right: 0;

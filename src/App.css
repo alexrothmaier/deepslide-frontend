@@ -5,6 +5,7 @@
   overflow-y: auto;
   background-color: #f3f2f1;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-top: 1.2rem;
 }
 
 /* Loading state styles */
@@ -15,6 +16,12 @@
 }
 
 /* Office Add-in specific styles */
+@media (max-width: 800px) {
+  .app-container {
+    padding-top: 1rem;
+  }
+}
+
 @media (max-width: 320px) {
   .app-container {
     padding: 0;
