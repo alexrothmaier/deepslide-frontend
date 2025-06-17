@@ -16,7 +16,36 @@ const AccountPage: React.FC = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [actionLoading, setActionLoading] = useState(false);
+  const [quota, setQuota] = useState<any>(null);
+  const [quotaLoading, setQuotaLoading] = useState(false);
+  const [quotaError, setQuotaError] = useState<string | null>(null);
   const navigate = useNavigate();
+
+  // Fetch quota info
+  const fetchQuota = async () => {
+    setQuotaLoading(true);
+    setQuotaError(null);
+    try {
+      if (!user) return;
+      const token = await user.getIdToken();
+      const res = await fetch(`${API_URL}/api/quota/status`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error('Failed to fetch quota info');
+      const data = await res.json();
+      setQuota(data);
+    } catch (e: any) {
+      setQuotaError('Could not fetch quota info.');
+    } finally {
+      setQuotaLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchRole();
+    fetchQuota();
+    // eslint-disable-next-line
+  }, [user]);
 
   // Fetch current role from backend (authoritative)
   const fetchRole = async () => {
@@ -89,26 +118,69 @@ const AccountPage: React.FC = () => {
           <div style={{ marginBottom: 8 }}><b>Account ID:</b> {uid}</div>
           <div style={{ marginBottom: 16 }}>
             <b>Current Role:</b>{' '}
-            {roleLoading ? <span style={{ color: '#aaa' }}>Loading...</span> : <span style={{ color: role === 'paid_user' ? '#36d1c4' : '#fbbf24' }}>{role || 'unknown'}</span>}
+            {roleLoading ? (
+  <span style={{ color: '#aaa' }}>Loading...</span>
+) : (
+  role === 'pro' ? (
+    <span style={{ color: '#a259ff', fontWeight: 600 }}>Pro</span>
+  ) : role === 'free' ? (
+    <span style={{ color: '#fbbf24', fontWeight: 600 }}>Free</span>
+  ) : (
+    <span style={{ color: '#fff' }}>{role || 'unknown'}</span>
+  )
+)}
           </div>
           <div style={{ marginBottom: 16 }}>
             <button
               onClick={() => handleRoleChange('upgrade')}
-              disabled={role === 'paid_user' || actionLoading}
-              style={{ marginRight: 12, padding: '8px 22px', fontWeight: 600, fontSize: 16, borderRadius: 8, background: '#36d1c4', color: 'white', border: 'none', cursor: role === 'paid_user' ? 'not-allowed' : 'pointer', opacity: actionLoading ? 0.7 : 1 }}
+              disabled={role === 'pro' || actionLoading}
+              style={{ marginRight: 12, padding: '8px 22px', fontWeight: 600, fontSize: 16, borderRadius: 8, background: '#a259ff', color: 'white', border: 'none', cursor: role === 'pro' ? 'not-allowed' : 'pointer', opacity: actionLoading ? 0.7 : 1 }}
               aria-busy={actionLoading}
             >
-              Upgrade to Paid User
+              Upgrade to Pro
             </button>
             <button
               onClick={() => handleRoleChange('downgrade')}
-              disabled={role === 'free_user' || actionLoading}
-              style={{ padding: '8px 22px', fontWeight: 600, fontSize: 16, borderRadius: 8, background: '#fbbf24', color: '#23272f', border: 'none', cursor: role === 'free_user' ? 'not-allowed' : 'pointer', opacity: actionLoading ? 0.7 : 1 }}
+              disabled={role === 'free' || actionLoading}
+              style={{ padding: '8px 22px', fontWeight: 600, fontSize: 16, borderRadius: 8, background: '#fbbf24', color: '#23272f', border: 'none', cursor: role === 'free' ? 'not-allowed' : 'pointer', opacity: actionLoading ? 0.7 : 1 }}
               aria-busy={actionLoading}
             >
-              Downgrade to Free User
+              Downgrade to Free
             </button>
           </div>
+          {/* Quota Info */}
+          <div style={{ marginBottom: 16, padding: '16px 0 0 0' }}>
+            <div style={{ fontWeight: 600, fontSize: 17, marginBottom: 6 }}>Quota</div>
+            {quotaLoading ? (
+              <span style={{ color: '#aaa' }}>Loading quota...</span>
+            ) : quotaError ? (
+              <span style={{ color: '#ef4444' }}>{quotaError}</span>
+            ) : quota ? (
+              <div>
+                <div style={{ fontSize: 15, marginBottom: 3 }}>
+                  <span style={{ color: '#888' }}>Searches used:&nbsp;</span>
+                  {quota.search_quota.limit === null ? (
+                    <span style={{ color: '#a259ff', fontWeight: 600 }}>
+                      {quota.search_quota.used ?? 0} (Unlimited allowed)
+                    </span>
+                  ) : (
+                    <span style={{ color: '#00bfae', fontWeight: 600 }}>
+                      {quota.search_quota.used ?? 0} / {quota.search_quota.limit} ({quota.search_quota.remaining} left)
+                    </span>
+                  )}
+                </div>
+                <div style={{ fontSize: 15 }}>
+                  <span style={{ color: '#888' }}>Storage used:&nbsp;</span>
+                  {quota.storage_quota.limit === null ? (
+                    <span style={{ color: '#a259ff', fontWeight: 600 }}>Unlimited</span>
+                  ) : (
+                    <span style={{ color: '#00bfae', fontWeight: 600 }}>{(quota.storage_quota.used / 1048576).toFixed(2)} MB / {(quota.storage_quota.limit / 1048576).toFixed(0)} MB</span>
+                  )}
+                </div>
+              </div>
+            ) : null}
+          </div>
+
           {message && <div style={{ color: '#36d1c4', marginBottom: 8 }}>{message}</div>}
           {error && <div style={{ color: '#ef4444', marginBottom: 8 }}>{error}</div>}
           <button
