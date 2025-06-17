@@ -83,11 +83,49 @@ const FilesPage: React.FC = () => {
   // File upload handler
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) return;
-    setSelectedFile(e.target.files[0]);
+    const files = Array.from(e.target.files);
+    for (const file of files) {
+      setSelectedFile(file);
+      await uploadFile(file);
+    }
+    setSelectedFile(null);
   };
 
-  const handleUpload = async () => {
-    if (!selectedFile) return;
+  // Drag-and-drop handler should also trigger upload
+  useEffect(() => {
+    const dropArea = dropRef.current;
+    if (!dropArea) return;
+    const handleDragOver = (e: DragEvent) => {
+      e.preventDefault();
+      setDropActive(true);
+    };
+    const handleDragLeave = (e: DragEvent) => {
+      e.preventDefault();
+      setDropActive(false);
+    };
+    const handleDrop = async (e: DragEvent) => {
+      e.preventDefault();
+      setDropActive(false);
+      if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+        const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.pptx'));
+        for (const file of files) {
+          setSelectedFile(file);
+          await uploadFile(file);
+        }
+        setSelectedFile(null);
+      }
+    };
+    dropArea.addEventListener('dragover', handleDragOver);
+    dropArea.addEventListener('dragleave', handleDragLeave);
+    dropArea.addEventListener('drop', handleDrop);
+    return () => {
+      dropArea.removeEventListener('dragover', handleDragOver);
+      dropArea.removeEventListener('dragleave', handleDragLeave);
+      dropArea.removeEventListener('drop', handleDrop);
+    };
+  }, []);
+
+  const uploadFile = async (file: File) => {
     setUploadLoading(true);
     setStatus(null);
     try {
@@ -98,7 +136,7 @@ const FilesPage: React.FC = () => {
         return;
       }
       const formData = new FormData();
-      formData.append('file', selectedFile);
+      formData.append('file', file);
       const response = await fetch(`${API_URL}/api/upload`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
@@ -110,13 +148,15 @@ const FilesPage: React.FC = () => {
         fetchFileList();
       } else {
         setStatus('Upload failed.');
+        setSelectedFile(null);
       }
     } catch (e) {
-      setStatus('Error upuploadLoading file.');
+      setStatus('Error uploading file.');
     } finally {
       setUploadLoading(false);
     }
   };
+
 
   // Drag and drop handlers
   useEffect(() => {
@@ -218,18 +258,14 @@ const FilesPage: React.FC = () => {
               id="file-upload-input"
               type="file"
               accept=".pptx"
+              multiple
               style={{ display: 'none' }}
               onChange={handleFileChange}
               disabled={uploadLoading}
             />
-            <button
-              className="files-page__upload-btn files-page__upload-btn--green"
-              style={{ marginTop: 16 }}
-              onClick={handleUpload}
-              disabled={!selectedFile || uploadLoading}
-            >
-              {uploadLoading ? 'Uploading...' : 'Upload'}
-            </button>
+            {selectedFile && !uploadLoading && (
+              <div className="files-page__upload-filename">{selectedFile.name}</div>
+            )}
             {uploadLoading && (
               <div className="files-page__upload-loading-bar" role="progressbar" aria-label="Uploading file">
                 <span className="files-page__upload-loading-inner" />
