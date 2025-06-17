@@ -183,7 +183,15 @@ const AccountPage: React.FC = () => {
                 </div>
                 <div style={{ fontSize: 15 }}>
                   <span style={{ color: '#888' }}>Slides processed:&nbsp;</span>
-                  <span style={{ color: '#36d1c4', fontWeight: 600 }}>{quota.slides_processed ?? 0}</span>
+                  {quota.slides_processed.limit === null ? (
+                    <span style={{ color: '#a259ff', fontWeight: 600 }}>
+                      {quota.slides_processed.used ?? 0} (Unlimited allowed)
+                    </span>
+                  ) : (
+                    <span style={{ color: '#36d1c4', fontWeight: 600 }}>
+                      {quota.slides_processed.used ?? 0} / {quota.slides_processed.limit} ({quota.slides_processed.remaining} left)
+                    </span>
+                  )}
                 </div>
               </div>
             ) : null}
