@@ -118,7 +118,7 @@ const UploadPage: React.FC<UploadPageProps> = ({ showBackButton }) => {
         return;
       }
       const response = await fetch(`${API_URL}/api/delete-file?filename=${encodeURIComponent(fileToDelete.filename)}`, {
-        method: 'DELETE',
+        method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
