@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import LandingLayout from '../../pages/landing/LandingLayout.tsx';
 import AccountSidebar from './AccountSidebar.tsx';
 import ProfileSection from './ProfileSection.tsx';
+import UsageSection from './UsageSection.tsx';
 import { useFirebaseAuth } from '../../../auth/useFirebaseAuth.ts';
 import { useNavigate } from 'react-router-dom';
 
@@ -143,15 +144,26 @@ const AccountPage: React.FC = () => {
             </section>
           </ProfileSection>
         );
-      // TODO: Add other sections here as components
+      case 'usage':
+        return (
+          <div style={{ padding: '48px 0 0 0', minHeight: '100vh', background: '#000' }}>
+            <UsageSection
+              searchesUsed={quota?.searches?.used ?? 0}
+              searchesSince={quota?.searches?.since || 'N/A'}
+              slidesUsed={quota?.slides_processed?.used ?? 0}
+              slidesSince={quota?.slides_processed?.since || 'N/A'}
+            />
+          </div>
+        );
       default:
         return (
           <ProfileSection>
-            <div style={{ color: '#888', fontSize: 18 }}>Section coming soon.</div>
+            <div style={{ color: '#888', fontSize: 16 }}>Section coming soon.</div>
           </ProfileSection>
         );
     }
   };
+
 
   return (
     <LandingLayout>
